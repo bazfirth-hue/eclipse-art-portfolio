@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EclipseArt — Original Spray Paint Space Art</title>
+  <meta name="description" content="Handcrafted cinematic space art by EclipseArt. Original spray paint nebulae, planets, alien cityscapes and worlds beyond.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="starfield"></canvas>
+  <div id="glow-cursor"></div>
+
+  <!-- ── NAVIGATION ─────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span>Eclipse</span><em>Art</em>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero"    class="nav-link">Home</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#about"   class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-nebula"></div>
+    <div class="hero-inner">
+      <p class="eyebrow hero-eyebrow reveal-hero">Original Spray Paint Art</p>
+      <h1 class="hero-title">
+        <span class="reveal-hero d1">Where the</span>
+        <span class="reveal-hero d2 gradient-text">Cosmos</span>
+        <span class="reveal-hero d3">Comes Alive.</span>
+      </h1>
+      <p class="hero-sub reveal-hero d4">
+        Handcrafted cinematic space art — nebulae, planets, alien cityscapes and worlds beyond, captured forever in spray paint.
+      </p>
+      <div class="hero-actions reveal-hero d5">
+        <a href="#gallery" class="btn btn-primary">Explore the Gallery</a>
+        <a href="#contact" class="btn btn-ghost">Commission a Piece</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ────────────────────────────────── -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">The Collection</p>
+        <h2 class="section-title">Original Works</h2>
+        <p class="section-desc">Every piece is a one-of-a-kind original, crafted entirely by hand with spray paint. No prints. No reproductions. Ever.</p>
+      </div>
+
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="space">Space Scenes</button>
+        <button class="filter-btn" data-filter="cityscape">Cityscapes</button>
+        <button class="filter-btn" data-filter="planet">Planet Systems</button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+
+        <div class="gallery-item reveal" data-category="space">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170311.jpg" alt="The Eclipse — solar eclipse spray paint art" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Space Scene</span>
+              <h3>The Eclipse</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="cityscape">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170532.jpg" alt="Violet Metropolis — purple cityscape under alien moon" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Cityscape</span>
+              <h3>Violet Metropolis</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="cityscape">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170523.jpg" alt="Blood Moon Rising — red cityscape under crimson moon" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Cityscape</span>
+              <h3>Blood Moon Rising</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="cityscape">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170337.jpg" alt="Jade City — teal alien cityscape under planet" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Cityscape</span>
+              <h3>Jade City</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="planet">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170613.jpg" alt="Neon World — cyan and pink planet with moons" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Planet System</span>
+              <h3>Neon World</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="planet">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170503.jpg" alt="Ocean Worlds — blue and green planet alignment" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Planet System</span>
+              <h3>Ocean Worlds</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="planet">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170625.jpg" alt="Stellar Drift — multi-planet system with bright stars" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Planet System</span>
+              <h3>Stellar Drift</h3>
+              <p>Spray Paint on Board</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="planet">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170457.jpg" alt="Silver Planet — monochrome planet with comet trails" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Planet System</span>
+              <h3>Silver Planet</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item reveal" data-category="space">
+          <div class="gallery-img-wrap">
+            <img src="20260412_170635.jpg" alt="Gold and Violet — purple and gold planet system" loading="lazy">
+          </div>
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <span class="tag">Space Scene</span>
+              <h3>Gold &amp; Violet</h3>
+              <p>Spray Paint on Canvas</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="gallery-footer reveal">
+        <p class="gallery-count">Showing <span id="visibleCount">9</span> of 9 works</p>
+        <a href="#contact" class="btn btn-ghost">Enquire About a Piece</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ──────────────────────────────────── -->
+  <section id="about">
+    <div class="container about-layout">
+      <div class="about-visual reveal">
+        <div class="about-frame">
+          <img src="20260412_170355.jpg" alt="Purple Cosmos — example spray paint art by EclipseArt">
+          <div class="about-badge">
+            <span>★</span>
+            <p>Original Art Only</p>
+          </div>
+          <div class="frame-corner tl"></div>
+          <div class="frame-corner tr"></div>
+          <div class="frame-corner bl"></div>
+          <div class="frame-corner br"></div>
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <p class="eyebrow">The Artist</p>
+        <h2 class="section-title">Born Under<br>a Dark Sky</h2>
+        <p>Every galaxy, nebula, and alien skyline you see here was created entirely by hand — with nothing but spray cans, steady nerves, and a deep love for the cosmos.</p>
+        <p>Inspired by Hubble and James Webb Space Telescope imagery, each piece aims to capture the sheer scale and beauty of our universe on a canvas you can hold.</p>
+        <p>Based in the UK, and available for commissions worldwide. Custom sizes, subjects, and colour palettes are all welcome.</p>
+        <div class="stats-row">
+          <div class="stat">
+            <strong>25<sup>+</sup></strong>
+            <em>Original Works</em>
+          </div>
+          <div class="stat">
+            <strong>100<sup>%</sup></strong>
+            <em>Handcrafted</em>
+          </div>
+          <div class="stat">
+            <strong>∞</strong>
+            <em>Universes Explored</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Get in Touch</p>
+        <h2 class="section-title">Commission a Piece</h2>
+        <p class="section-desc">Have a specific vision in mind? A particular nebula, a favourite planet, your own alien cityscape? Let's bring it to life.</p>
+      </div>
+      <div class="contact-layout">
+        <form class="contact-form glass reveal" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="fname">Your Name</label>
+              <input type="text" id="fname" name="name" placeholder="Jane Smith" autocomplete="name">
+            </div>
+            <div class="form-field">
+              <label for="femail">Email Address</label>
+              <input type="email" id="femail" name="email" placeholder="jane@example.com" autocomplete="email">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="ftype">What are you looking for?</label>
+            <select id="ftype" name="type">
+              <option value="" disabled selected>Select an option…</option>
+              <option value="commission">Commission a Custom Piece</option>
+              <option value="purchase">Purchase an Existing Work</option>
+              <option value="other">General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="fmsg">Your Message</label>
+            <textarea id="fmsg" name="message" rows="5" placeholder="Tell me about the piece you'd like — subject, size, colour palette, any references…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-wide">
+            <span class="btn-label">Send Message</span>
+            <span class="btn-arrow">→</span>
+          </button>
+          <div class="form-success" id="formSuccess" aria-live="polite">
+            <span class="success-icon">✦</span>
+            <p>Message sent — I'll be in touch soon!</p>
+          </div>
+        </form>
+
+        <div class="contact-aside">
+          <div class="contact-card glass reveal">
+            <div class="card-icon">✦</div>
+            <h4>Commissions Open</h4>
+            <p>Custom pieces in any size. Typical turnaround is 4–6 weeks from deposit.</p>
+          </div>
+          <div class="contact-card glass reveal">
+            <div class="card-icon">✦</div>
+            <h4>Worldwide Shipping</h4>
+            <p>Every piece is professionally packaged and shipped safely anywhere in the world.</p>
+          </div>
+          <div class="contact-card glass reveal">
+            <div class="card-icon">✦</div>
+            <h4>One of a Kind</h4>
+            <p>Every work is an original. No prints, no reproductions. You own the only one in existence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <a href="#hero" class="nav-logo footer-logo">
+        <span>Eclipse</span><em>Art</em>
+      </a>
+      <p class="footer-tag">Handcrafted space art. Original. One of a kind.</p>
+      <p class="footer-copy">© 2025 EclipseArt. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
