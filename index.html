@@ -207,24 +207,26 @@
   <section id="about">
     <div class="container">
 
-      <!-- Hero portrait + bio -->
+      <!-- Hero row: portrait + bio -->
       <div class="about-hero-row">
-        <div class="about-hero-img reveal">
+
+        <div class="about-portrait-col reveal">
           <div class="about-neon-frame">
-            <img src="Aboutme (2).png" alt="EclipseArt — the artist">
+            <img src="Aboutme (2).png" alt="James — EclipseArt artist">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
             <div class="neon-frame-corner bl"></div>
             <div class="neon-frame-corner br"></div>
+            <div class="portrait-badge glass">EclipseArt</div>
           </div>
         </div>
-        <div class="about-hero-text reveal">
+
+        <div class="about-bio-col reveal">
           <p class="eyebrow">The Artist</p>
           <h2 class="section-title">Born Under<br>a Dark Sky</h2>
-          <p>Every galaxy, nebula, and alien skyline you see here was created entirely by hand — with nothing but spray cans, steady nerves, and a deep love for the cosmos.</p>
-          <p>Inspired by Hubble and James Webb Space Telescope imagery, each piece aims to capture the sheer scale and beauty of our universe on a canvas you can hold.</p>
-          <p>Based in the UK, and available for commissions worldwide. Custom sizes, subjects, and colour palettes are all welcome.</p>
+          <p class="about-bio-p">I'm James, a spray paint artist inspired by space, planets, and the vast unknown. Using bold techniques and layered textures, I create vivid cosmic scenes that explore colour, movement, and atmosphere as my style continues to evolve.</p>
+          <p class="about-bio-p">My work is deeply personal. Art has helped me stay grounded after moving away from close friends, offering comfort and perspective through the exploration of something much bigger than myself, bringing a piece of the unknown closer to home.</p>
           <div class="stats-row">
             <div class="stat">
               <strong>25<sup>+</sup></strong>
@@ -240,34 +242,47 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- Artist at work -->
+      <!-- Workshop accent grid -->
       <div class="about-work-head reveal">
         <p class="eyebrow">Behind the Canvas</p>
         <h3 class="about-work-title">The Artist at Work</h3>
       </div>
-      <div class="about-work-grid">
-        <div class="work-item reveal">
+
+      <div class="about-accent-grid">
+        <div class="accent-item reveal">
           <div class="about-neon-frame">
-            <img src="Aboutme (1).png" alt="EclipseArt — creating spray paint art" loading="lazy">
+            <img src="1777747360558.png" alt="James in his workshop" loading="lazy">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
             <div class="neon-frame-corner bl"></div>
             <div class="neon-frame-corner br"></div>
-            <div class="work-caption glass">Spray &amp; Create</div>
+            <div class="work-caption glass">In the Workshop</div>
           </div>
         </div>
-        <div class="work-item work-item--offset reveal">
+        <div class="accent-item accent-item--feature reveal">
           <div class="about-neon-frame">
-            <img src="Aboutme (3).png" alt="EclipseArt — finishing a piece" loading="lazy">
+            <img src="1777747982340.png" alt="James painting at the easel" loading="lazy">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
             <div class="neon-frame-corner bl"></div>
             <div class="neon-frame-corner br"></div>
-            <div class="work-caption glass">The Final Touch</div>
+            <div class="work-caption glass">At the Easel</div>
+          </div>
+        </div>
+        <div class="accent-item reveal">
+          <div class="about-neon-frame">
+            <img src="1777748232234.png" alt="James with his planet series" loading="lazy">
+            <div class="neon-img-overlay"></div>
+            <div class="neon-frame-corner tl"></div>
+            <div class="neon-frame-corner tr"></div>
+            <div class="neon-frame-corner bl"></div>
+            <div class="neon-frame-corner br"></div>
+            <div class="work-caption glass">The Collection</div>
           </div>
         </div>
       </div>
@@ -284,7 +299,11 @@
         <p class="section-desc">Have a specific vision in mind? A particular nebula, a favourite planet, your own alien cityscape? Let's bring it to life.</p>
       </div>
       <div class="contact-layout">
+        <!-- Web3Forms: sign up free at web3forms.com → enter your email → copy the access key below -->
         <form class="contact-form glass reveal" id="contactForm" novalidate>
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+          <input type="hidden" name="subject"    value="New Commission Request — EclipseArt">
+          <input type="hidden" name="from_name"  value="EclipseArt Website">
           <div class="form-row">
             <div class="form-field">
               <label for="fname">Your Name</label>
@@ -314,7 +333,7 @@
           </button>
           <div class="form-success" id="formSuccess" aria-live="polite">
             <span class="success-icon">✦</span>
-            <p>Message sent — I'll be in touch soon!</p>
+            <p><strong>Commission Request Received!</strong> I'll be in touch soon.</p>
           </div>
         </form>
 

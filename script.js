@@ -15,10 +15,12 @@ function initStars() {
     stars.push({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.3 + 0.15,
+      r: Math.random() * 1.4 + 0.15,
       a: Math.random(),
-      speed: Math.random() * 0.35 + 0.08,
+      speed: Math.random() * 0.9 + 0.2,
       dir: Math.random() > 0.5 ? 1 : -1,
+      max: Math.random() * 0.55 + 0.45,
+      min: Math.random() * 0.06 + 0.02,
     });
   }
 }
@@ -26,8 +28,8 @@ function initStars() {
 function drawStars() {
   ctx.clearRect(0, 0, W, H);
   for (const s of stars) {
-    s.a += s.speed * 0.005 * s.dir;
-    if (s.a > 1 || s.a < 0.08) s.dir *= -1;
+    s.a += s.speed * 0.014 * s.dir;
+    if (s.a > s.max || s.a < s.min) s.dir *= -1;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255,255,255,${s.a.toFixed(3)})`;
@@ -146,7 +148,7 @@ const validations = [
   { name: 'message', check: v => v.trim().length > 10 },
 ];
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
 
   let valid = true;
@@ -166,14 +168,27 @@ form.addEventListener('submit', e => {
   submitBtn.disabled = true;
   label.textContent  = 'Sending…';
 
-  // Simulated send — replace with real endpoint if needed
-  setTimeout(() => {
-    form.reset();
+  try {
+    const res  = await fetch('https://api.web3forms.com/submit', {
+      method:  'POST',
+      body:    new FormData(form),
+      headers: { 'Accept': 'application/json' },
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      form.reset();
+      submitBtn.disabled = false;
+      label.textContent  = 'Send Message';
+      formSuccess.classList.add('visible');
+      setTimeout(() => formSuccess.classList.remove('visible'), 7000);
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  } catch (err) {
     submitBtn.disabled = false;
-    label.textContent  = 'Send Message';
-    formSuccess.classList.add('visible');
-    setTimeout(() => formSuccess.classList.remove('visible'), 5000);
-  }, 1200);
+    label.textContent  = 'Try Again';
+  }
 });
 
 // Clear error state on input
