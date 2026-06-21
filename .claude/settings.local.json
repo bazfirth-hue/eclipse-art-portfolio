@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(winget install *)",
+      "Bash(cd *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "WebFetch(domain:www.temperer.global)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}
