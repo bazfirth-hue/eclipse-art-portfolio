@@ -3,18 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EclipseArt — Original Spray Paint Space Art</title>
-  <meta name="description" content="Handcrafted cinematic space art by EclipseArt. Original spray paint nebulae, planets, alien cityscapes and worlds beyond.">
+
+  <title>EclipseArt — Original Spray Paint Space Art by James</title>
+  <meta name="description" content="Original hand-sprayed space art by James. One-of-a-kind nebulae, planets and alien cityscapes on canvas. Commissions open, shipped worldwide. No prints, no reproductions.">
+  <meta name="author" content="James — EclipseArt">
+  <meta name="theme-color" content="#04040f">
+
+  <!-- Social sharing. Replace SITE_URL with the live address once it is hosted. -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="EclipseArt">
+  <meta property="og:title"       content="EclipseArt — Original Spray Paint Space Art">
+  <meta property="og:description" content="One-of-a-kind hand-sprayed nebulae, planets and alien cityscapes. Commissions open.">
+  <meta property="og:image"       content="img/og-card.jpg">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="EclipseArt — Original Spray Paint Space Art">
+  <meta name="twitter:description" content="One-of-a-kind hand-sprayed nebulae, planets and alien cityscapes. Commissions open.">
+  <meta name="twitter:image"       content="img/og-card.jpg">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="image" href="img/the-eclipse.jpg" fetchpriority="high">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VisualArtsEvent",
+    "@id": "#eclipseart",
+    "name": "EclipseArt",
+    "description": "Original spray paint space art by James. Hand-sprayed nebulae, planets and alien cityscapes on canvas.",
+    "performer": { "@type": "Person", "name": "James", "jobTitle": "Spray paint artist" }
+  }
+  </script>
 </head>
 <body>
 
+  <a href="#gallery" class="skip-link">Skip to the gallery</a>
+
   <div id="nebula-bg" aria-hidden="true"></div>
-  <canvas id="starfield"></canvas>
-  <div id="glow-cursor"></div>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div id="glow-cursor" aria-hidden="true"></div>
 
   <!-- ── NAVIGATION ─────────────────────────────── -->
   <nav id="navbar">
@@ -23,12 +57,12 @@
         <span>Eclipse</span><em>Art</em>
       </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#hero"    class="nav-link">Home</a></li>
         <li><a href="#gallery" class="nav-link">Gallery</a></li>
-        <li><a href="#about"   class="nav-link">About</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#about"   class="nav-link">The Artist</a></li>
+        <li><a href="#process" class="nav-link">Commissions</a></li>
+        <li><a href="#contact" class="nav-link nav-cta">Get in Touch</a></li>
       </ul>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
         <span></span>
         <span></span>
         <span></span>
@@ -38,27 +72,53 @@
 
   <!-- ── HERO ───────────────────────────────────── -->
   <section id="hero">
-    <div class="hero-nebula"></div>
-    <div class="hero-inner">
-      <p class="eyebrow hero-eyebrow reveal-hero">Original Spray Paint Art</p>
-      <h1 class="hero-title">
-        <span class="reveal-hero d1">Where the</span>
-        <span class="reveal-hero d2 gradient-text">Cosmos</span>
-        <span class="reveal-hero d3">Comes Alive.</span>
-      </h1>
-      <p class="hero-sub reveal-hero d4">
-        Handcrafted cinematic space art — nebulae, planets, alien cityscapes and worlds beyond, captured forever in spray paint.
-      </p>
-      <div class="hero-actions reveal-hero d5">
-        <a href="#gallery" class="btn btn-primary">Explore the Gallery</a>
-        <a href="#contact" class="btn btn-ghost">Commission a Piece</a>
+    <div class="hero-nebula" aria-hidden="true"></div>
+    <div class="container hero-grid">
+
+      <div class="hero-copy">
+        <p class="eyebrow hero-eyebrow reveal-hero">Original Spray Paint Art</p>
+        <h1 class="hero-title">
+          <span class="reveal-hero d1">Where the</span>
+          <span class="reveal-hero d2 gradient-text">Cosmos</span>
+          <span class="reveal-hero d3">Comes Alive.</span>
+        </h1>
+        <p class="hero-sub reveal-hero d4">
+          Handcrafted cinematic space art, nebulae, planets, alien cityscapes and worlds beyond, captured forever in spray paint.
+        </p>
+        <div class="hero-actions reveal-hero d5">
+          <a href="#gallery" class="btn btn-primary">Explore the Gallery</a>
+          <a href="#contact" class="btn btn-ghost">Commission a Piece</a>
+        </div>
       </div>
+
+      <div class="hero-art reveal-hero d3">
+        <figure class="hero-frame">
+          <img src="img/the-eclipse.jpg" width="1800" height="1245"
+               alt="The Eclipse, a spray painted solar eclipse with a burning corona" fetchpriority="high">
+          <figcaption>
+            <span class="hero-frame-label">Featured Work</span>
+            <strong>The Eclipse</strong>
+          </figcaption>
+        </figure>
+      </div>
+
     </div>
-    <div class="scroll-hint">
+
+    <div class="scroll-hint" aria-hidden="true">
       <span>Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
+
+  <!-- ── TRUST STRIP ────────────────────────────── -->
+  <div class="trust-strip">
+    <div class="container trust-inner">
+      <span>One of a kind</span>
+      <span>Hand sprayed, never printed</span>
+      <span>Commissions open</span>
+      <span>Shipped worldwide</span>
+    </div>
+  </div>
 
   <!-- ── GALLERY ────────────────────────────────── -->
   <section id="gallery">
@@ -69,136 +129,240 @@
         <p class="section-desc">Every piece is a one-of-a-kind original, crafted entirely by hand with spray paint. No prints. No reproductions. Ever.</p>
       </div>
 
-      <div class="filter-bar reveal">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="space">Space Scenes</button>
-        <button class="filter-btn" data-filter="cityscape">Cityscapes</button>
-        <button class="filter-btn" data-filter="planet">Planet Systems</button>
+      <div class="filter-bar reveal" role="group" aria-label="Filter works by type">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="space" aria-pressed="false">Space Scenes</button>
+        <button class="filter-btn" data-filter="cityscape" aria-pressed="false">Cityscapes</button>
+        <button class="filter-btn" data-filter="planet" aria-pressed="false">Planet Systems</button>
       </div>
 
+      <!--
+        Each work carries its own data. To change a title, medium or size,
+        edit the attributes here. data-size and data-status stay empty until
+        James confirms them, and anything empty simply does not render.
+      -->
       <div class="gallery-grid" id="galleryGrid">
 
-        <div class="gallery-item reveal" data-category="space">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170311.jpg" alt="The Eclipse — solar eclipse spray paint art" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Space Scene</span>
-              <h3>The Eclipse</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="space"
+                data-title="The Eclipse" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/the-eclipse.jpg"
+                data-caption="A total eclipse at the moment of totality, the corona burning white against deep space.">
+          <img src="img/thumb/the-eclipse.jpg" width="900" height="623" loading="lazy" decoding="async"
+               alt="The Eclipse, a spray painted solar eclipse with a burning white corona">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Space Scene</span><span class="g-title">The Eclipse</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="cityscape">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170532.jpg" alt="Violet Metropolis — purple cityscape under alien moon" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Cityscape</span>
-              <h3>Violet Metropolis</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Violet Metropolis" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/violet-metropolis.jpg"
+                data-caption="A skyline of towers silhouetted beneath an alien moon, lit violet from above.">
+          <img src="img/thumb/violet-metropolis.jpg" width="634" height="900" loading="lazy" decoding="async"
+               alt="Violet Metropolis, a purple alien cityscape beneath a large moon">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Violet Metropolis</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="cityscape">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170523.jpg" alt="Blood Moon Rising — red cityscape under crimson moon" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Cityscape</span>
-              <h3>Blood Moon Rising</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Blood Moon Rising" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/blood-moon-rising.jpg"
+                data-caption="A crimson moon climbing over a city, the light bleeding down through the haze.">
+          <img src="img/thumb/blood-moon-rising.jpg" width="637" height="900" loading="lazy" decoding="async"
+               alt="Blood Moon Rising, a red cityscape beneath a crimson moon">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Blood Moon Rising</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="cityscape">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170337.jpg" alt="Jade City — teal alien cityscape under planet" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Cityscape</span>
-              <h3>Jade City</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Jade City" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/jade-city.jpg"
+                data-caption="Teal towers under a banded gas giant, the whole scene lit from a single cold source.">
+          <img src="img/thumb/jade-city.jpg" width="642" height="900" loading="lazy" decoding="async"
+               alt="Jade City, a teal alien cityscape beneath a large planet">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Jade City</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="planet">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170613.jpg" alt="Neon World — cyan and pink planet with moons" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Planet System</span>
-              <h3>Neon World</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Cloud City" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/cloud-city.jpg"
+                data-caption="Rooftops breaking through low cloud, a scarred green world filling the sky above them.">
+          <img src="img/thumb/cloud-city.jpg" width="643" height="900" loading="lazy" decoding="async"
+               alt="Cloud City, a cityscape rising through cloud beneath a green and red planet">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Cloud City</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="planet">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170503.jpg" alt="Ocean Worlds — blue and green planet alignment" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Planet System</span>
-              <h3>Ocean Worlds</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Neon Skyline" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/neon-skyline.jpg"
+                data-caption="A magenta world setting behind a city, the towers picked out in hot pink light.">
+          <img src="img/thumb/neon-skyline.jpg" width="714" height="900" loading="lazy" decoding="async"
+               alt="Neon Skyline, a pink and magenta cityscape beneath a large planet">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Neon Skyline</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="planet">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170625.jpg" alt="Stellar Drift — multi-planet system with bright stars" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Planet System</span>
-              <h3>Stellar Drift</h3>
-              <p>Spray Paint on Board</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="cityscape"
+                data-title="Frozen Capital" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/frozen-capital.jpg"
+                data-caption="An ice world hanging over a blue city, everything in the scene lit the same cold colour.">
+          <img src="img/thumb/frozen-capital.jpg" width="642" height="900" loading="lazy" decoding="async"
+               alt="Frozen Capital, a blue ice planet above a blue cityscape">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Cityscape</span><span class="g-title">Frozen Capital</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="planet">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170457.jpg" alt="Silver Planet — monochrome planet with comet trails" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Planet System</span>
-              <h3>Silver Planet</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Neon World" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/neon-world.jpg"
+                data-caption="A cyan and pink planet with its moons, drifting through a field of young stars.">
+          <img src="img/thumb/neon-world.jpg" width="900" height="637" loading="lazy" decoding="async"
+               alt="Neon World, a cyan and pink planet with moons">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Neon World</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
-        <div class="gallery-item reveal" data-category="space">
-          <div class="gallery-img-wrap">
-            <img src="20260412_170635.jpg" alt="Gold and Violet — purple and gold planet system" loading="lazy">
-          </div>
-          <div class="gallery-overlay">
-            <div class="gallery-info">
-              <span class="tag">Space Scene</span>
-              <h3>Gold &amp; Violet</h3>
-              <p>Spray Paint on Canvas</p>
-            </div>
-          </div>
-        </div>
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Ocean Worlds" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/ocean-worlds.jpg"
+                data-caption="Two water worlds in alignment, blue and green, the smaller one caught in the larger one's light.">
+          <img src="img/thumb/ocean-worlds.jpg" width="615" height="900" loading="lazy" decoding="async"
+               alt="Ocean Worlds, blue and green planets in alignment">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Ocean Worlds</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Stellar Drift" data-medium="Spray paint on board"
+                data-size="" data-status=""
+                data-full="img/stellar-drift.jpg"
+                data-caption="A multi-planet system strung across the canvas, bright stars burning between them.">
+          <img src="img/thumb/stellar-drift.jpg" width="900" height="676" loading="lazy" decoding="async"
+               alt="Stellar Drift, a multi planet system with bright stars">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Stellar Drift</span><span class="g-sub">Spray paint on board</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Silver Planet" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/silver-planet.jpg"
+                data-caption="Worked almost entirely in monochrome, comet trails cutting past a silver world.">
+          <img src="img/thumb/silver-planet.jpg" width="900" height="668" loading="lazy" decoding="async"
+               alt="Silver Planet, a monochrome planet with comet trails">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Silver Planet</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Emberfall" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/emberfall.jpg"
+                data-caption="A banded planet running red and green, a chain of small moons falling away from it.">
+          <img src="img/thumb/emberfall.jpg" width="900" height="639" loading="lazy" decoding="async"
+               alt="Emberfall, a red and green banded planet with a chain of moons">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Emberfall</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Comet Run" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/comet-run.jpg"
+                data-caption="Comets cutting across a green aurora, three worlds strung out behind them.">
+          <img src="img/thumb/comet-run.jpg" width="900" height="604" loading="lazy" decoding="async"
+               alt="Comet Run, planets and comets crossing a green aurora">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Comet Run</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Verdant Giant" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/verdant-giant.jpg"
+                data-caption="A single green world filling most of the frame, ringed in soft light.">
+          <img src="img/thumb/verdant-giant.jpg" width="900" height="624" loading="lazy" decoding="async"
+               alt="Verdant Giant, a large green planet ringed in light">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Verdant Giant</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="planet"
+                data-title="Sister Worlds" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/sister-worlds.jpg"
+                data-caption="Three worlds sharing one sky, each one painted in a different temperature of light.">
+          <img src="img/thumb/sister-worlds.jpg" width="900" height="642" loading="lazy" decoding="async"
+               alt="Sister Worlds, three planets of different colours in one scene">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Planet System</span><span class="g-title">Sister Worlds</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="space"
+                data-title="Gold &amp; Violet" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/gold-and-violet.jpg"
+                data-caption="Gold against violet, the two colours the hardest to make sit together without going muddy.">
+          <img src="img/thumb/gold-and-violet.jpg" width="900" height="635" loading="lazy" decoding="async"
+               alt="Gold and Violet, a purple and gold planet system">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Space Scene</span><span class="g-title">Gold &amp; Violet</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="space"
+                data-title="Magenta Veil" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/magenta-veil.jpg"
+                data-caption="A curtain of magenta light drawn across four worlds, the smallest of them barely there.">
+          <img src="img/thumb/magenta-veil.jpg" width="900" height="633" loading="lazy" decoding="async"
+               alt="Magenta Veil, magenta and purple planets behind a curtain of pink light">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Space Scene</span><span class="g-title">Magenta Veil</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
+
+        <button class="gallery-item reveal" data-category="space"
+                data-title="Starburst" data-medium="Spray paint on canvas"
+                data-size="" data-status=""
+                data-full="img/starburst.jpg"
+                data-caption="A star going up at the centre of the frame, everything else falling away from the flash.">
+          <img src="img/thumb/starburst.jpg" width="652" height="900" loading="lazy" decoding="async"
+               alt="Starburst, a bright star flaring between two planets">
+          <span class="gallery-overlay"><span class="gallery-info">
+            <span class="tag">Space Scene</span><span class="g-title">Starburst</span><span class="g-sub">Spray paint on canvas</span>
+          </span></span>
+        </button>
 
       </div>
 
       <div class="gallery-footer reveal">
-        <p class="gallery-count">Showing <span id="visibleCount">9</span> of 9 works</p>
+        <p class="gallery-count">Showing <span id="visibleCount">18</span> of 18 works</p>
         <a href="#contact" class="btn btn-ghost">Enquire About a Piece</a>
       </div>
     </div>
@@ -208,12 +372,12 @@
   <section id="about">
     <div class="container">
 
-      <!-- Hero row: portrait + bio -->
       <div class="about-hero-row">
 
         <div class="about-portrait-col reveal">
           <div class="about-neon-frame">
-            <img src="Aboutme (2).png" alt="James — EclipseArt artist">
+            <img src="img/artist-portrait.jpg" width="879" height="1024" loading="lazy" decoding="async"
+                 alt="James, the artist behind EclipseArt, silhouetted against an eclipse">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
@@ -238,7 +402,7 @@
               <em>Handcrafted</em>
             </div>
             <div class="stat">
-              <strong>∞</strong>
+              <strong>&infin;</strong>
               <em>Universes Explored</em>
             </div>
           </div>
@@ -246,7 +410,6 @@
 
       </div>
 
-      <!-- Workshop accent grid -->
       <div class="about-work-head reveal">
         <p class="eyebrow">Behind the Canvas</p>
         <h3 class="about-work-title">The Artist at Work</h3>
@@ -255,7 +418,8 @@
       <div class="about-accent-grid">
         <div class="accent-item reveal">
           <div class="about-neon-frame">
-            <img src="1777747360558.png" alt="James in his workshop" loading="lazy">
+            <img src="img/workshop-paints.jpg" width="848" height="1233" loading="lazy" decoding="async"
+                 alt="James choosing a can from a shelf of spray paints in his workshop">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
@@ -266,7 +430,8 @@
         </div>
         <div class="accent-item accent-item--feature reveal">
           <div class="about-neon-frame">
-            <img src="1777747982340.png" alt="James painting at the easel" loading="lazy">
+            <img src="img/workshop-easel.jpg" width="848" height="1148" loading="lazy" decoding="async"
+                 alt="James painting a nebula at the easel">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
@@ -277,7 +442,8 @@
         </div>
         <div class="accent-item reveal">
           <div class="about-neon-frame">
-            <img src="1777748232234.png" alt="James with his planet series" loading="lazy">
+            <img src="img/workshop-collection.jpg" width="844" height="1067" loading="lazy" decoding="async"
+                 alt="James looking over his finished planet paintings">
             <div class="neon-img-overlay"></div>
             <div class="neon-frame-corner tl"></div>
             <div class="neon-frame-corner tr"></div>
@@ -291,6 +457,45 @@
     </div>
   </section>
 
+  <!-- ── PROCESS ────────────────────────────────── -->
+  <section id="process">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Commissions</p>
+        <h2 class="section-title">How a Piece Gets Made</h2>
+        <p class="section-desc">Every commission runs the same four steps, so you always know where your piece is up to.</p>
+      </div>
+
+      <ol class="process-grid">
+        <li class="process-step reveal">
+          <span class="step-num">01</span>
+          <h3>Tell me the idea</h3>
+          <p>Subject, size, colours, where it is going to hang. Send references if you have them, a rough description is enough to start.</p>
+        </li>
+        <li class="process-step reveal">
+          <span class="step-num">02</span>
+          <h3>Sketch and quote</h3>
+          <p>I come back with the approach and a fixed price. Nothing is sprayed and nothing is owed until you are happy with both.</p>
+        </li>
+        <li class="process-step reveal">
+          <span class="step-num">03</span>
+          <h3>Painted by hand</h3>
+          <p>Built up in layers with spray cans, no printing and no digital work at any stage. You get progress photos as it comes together.</p>
+        </li>
+        <li class="process-step reveal">
+          <span class="step-num">04</span>
+          <h3>Sealed and shipped</h3>
+          <p>Varnished to protect the surface, packed hard-cornered and boxed, then shipped tracked anywhere in the world.</p>
+        </li>
+      </ol>
+
+      <div class="process-note reveal glass">
+        <p><strong>Typical turnaround is 4 to 6 weeks</strong> from the deposit, depending on size and how many pieces are already in the queue.</p>
+        <a href="#contact" class="btn btn-primary">Start a Commission</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── CONTACT ────────────────────────────────── -->
   <section id="contact">
     <div class="container">
@@ -300,19 +505,22 @@
         <p class="section-desc">Have a specific vision in mind? A particular nebula, a favourite planet, your own alien cityscape? Let's bring it to life.</p>
       </div>
       <div class="contact-layout">
-        <!-- Web3Forms: sign up free at web3forms.com → enter your email → copy the access key below -->
+        <!-- Web3Forms: sign up free at web3forms.com, enter your email, paste the access key below. -->
         <form class="contact-form glass reveal" id="contactForm" novalidate>
           <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
           <input type="hidden" name="subject"    value="New Commission Request — EclipseArt">
           <input type="hidden" name="from_name"  value="EclipseArt Website">
+          <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-row">
             <div class="form-field">
               <label for="fname">Your Name</label>
               <input type="text" id="fname" name="name" placeholder="Jane Smith" autocomplete="name">
+              <span class="field-error">Please tell me your name.</span>
             </div>
             <div class="form-field">
               <label for="femail">Email Address</label>
               <input type="email" id="femail" name="email" placeholder="jane@example.com" autocomplete="email">
+              <span class="field-error">That email address does not look right.</span>
             </div>
           </div>
           <div class="form-field">
@@ -323,34 +531,37 @@
               <option value="purchase">Purchase an Existing Work</option>
               <option value="other">General Enquiry</option>
             </select>
+            <span class="field-error">Please pick one.</span>
           </div>
           <div class="form-field">
             <label for="fmsg">Your Message</label>
-            <textarea id="fmsg" name="message" rows="5" placeholder="Tell me about the piece you'd like — subject, size, colour palette, any references…"></textarea>
+            <textarea id="fmsg" name="message" rows="5" placeholder="Tell me about the piece you'd like, subject, size, colour palette, any references…"></textarea>
+            <span class="field-error">A line or two about what you are after, please.</span>
           </div>
           <button type="submit" class="btn btn-primary btn-wide">
             <span class="btn-label">Send Message</span>
-            <span class="btn-arrow">→</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
           </button>
-          <div class="form-success" id="formSuccess" aria-live="polite">
-            <span class="success-icon">✦</span>
+          <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <span class="success-icon" aria-hidden="true">✦</span>
             <p><strong>Commission Request Received!</strong> I'll be in touch soon.</p>
           </div>
         </form>
 
         <div class="contact-aside">
           <div class="contact-card glass reveal">
-            <div class="card-icon">✦</div>
+            <div class="card-icon" aria-hidden="true">✦</div>
             <h4>Commissions Open</h4>
-            <p>Custom pieces in any size. Typical turnaround is 4–6 weeks from deposit.</p>
+            <p>Custom pieces in any size. Typical turnaround is 4 to 6 weeks from deposit.</p>
           </div>
           <div class="contact-card glass reveal">
-            <div class="card-icon">✦</div>
+            <div class="card-icon" aria-hidden="true">✦</div>
             <h4>Worldwide Shipping</h4>
             <p>Every piece is professionally packaged and shipped safely anywhere in the world.</p>
           </div>
           <div class="contact-card glass reveal">
-            <div class="card-icon">✦</div>
+            <div class="card-icon" aria-hidden="true">✦</div>
             <h4>One of a Kind</h4>
             <p>Every work is an original. No prints, no reproductions. You own the only one in existence.</p>
           </div>
@@ -362,13 +573,42 @@
   <!-- ── FOOTER ─────────────────────────────────── -->
   <footer id="footer">
     <div class="container footer-inner">
-      <a href="#hero" class="nav-logo footer-logo">
-        <span>Eclipse</span><em>Art</em>
-      </a>
-      <p class="footer-tag">Handcrafted space art. Original. One of a kind.</p>
-      <p class="footer-copy">© 2025 EclipseArt. All rights reserved.</p>
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo footer-logo">
+          <span>Eclipse</span><em>Art</em>
+        </a>
+        <p class="footer-tag">Handcrafted space art. Original. One of a kind.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#gallery">Gallery</a>
+        <a href="#about">The Artist</a>
+        <a href="#process">Commissions</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">© <span id="year">2026</span> EclipseArt. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- ── LIGHTBOX ───────────────────────────────── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork viewer" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Close viewer">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous work">&#8249;</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next work">&#8250;</button>
+
+    <figure class="lb-stage">
+      <img id="lbImage" src="" alt="">
+      <figcaption class="lb-caption glass">
+        <p class="lb-tag" id="lbTag"></p>
+        <h3 id="lbTitle"></h3>
+        <p class="lb-desc" id="lbDesc"></p>
+        <p class="lb-meta" id="lbMeta"></p>
+        <div class="lb-actions">
+          <button class="btn btn-primary btn-sm" id="lbEnquire">Enquire About This Piece</button>
+          <span class="lb-count" id="lbCount"></span>
+        </div>
+      </figcaption>
+    </figure>
+  </div>
 
   <script src="script.js"></script>
 </body>
