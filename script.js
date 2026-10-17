@@ -132,6 +132,151 @@ window.addEventListener('resize', () => {
   }, 150);
 }, { passive: true });
 
+/* ── HERO GALAXY ─────────────────────────────────── */
+// A faint spiral galaxy turning slowly behind the featured work. The stars are
+// drawn once to an offscreen sprite and only rotated each frame, so it is cheap.
+// It fades as the hero scrolls away and stops entirely when it cannot be seen.
+(function heroGalaxy() {
+  const g = document.getElementById('galaxy');
+  if (!g) return;
+  const gctx  = g.getContext('2d');
+  const hero  = document.getElementById('hero');
+  const art   = document.querySelector('.hero-art');
+  const SPIN  = (Math.PI * 2) / 120;   // one full turn every two minutes
+  const PEAK  = 0.95;                  // brightest it ever gets
+  const born  = performance.now();
+  let gw, gh, cx, cy, radius, sprite;
+  let angle = 0, last = null, frame = null, onScreen = true;
+
+  function buildSprite() {
+    const size = Math.round(radius * 2);
+    const c = size / 2;
+    const stars = document.createElement('canvas');
+    stars.width = stars.height = size;
+    const s = stars.getContext('2d');
+
+    const count = coarsePointer ? 2200 : 4200;
+    for (let i = 0; i < count; i++) {
+      const t      = Math.pow(Math.random(), 0.65);          // crowd stars toward the core
+      const r      = t * c * 0.95;
+      const twist  = t * 2.6 * Math.PI;                       // how tightly the arms wind
+      const spread = (Math.random() - 0.5) * (0.45 + t * 0.8); // arms fan out toward the rim
+      const disc   = Math.random() < 0.15;                     // some stars sit between the arms
+      const a      = disc ? Math.random() * Math.PI * 2 : (i % 2) * Math.PI + twist + spread;
+      const jx     = (Math.random() - 0.5) * c * 0.07;
+      const jy     = (Math.random() - 0.5) * c * 0.07;
+      const pick   = Math.random();
+      const col    = pick < 0.14 ? '255,244,230' : pick < 0.55 ? '77,255,252' : '150,110,255';
+      const alpha  = Math.min(1, (1 - t * 0.55) * (0.45 + Math.random() * 0.6));
+      const dot    = Math.random() < 0.06 ? 2 : 0.6 + Math.random() * 1.1;
+      s.fillStyle = `rgba(${col},${alpha.toFixed(3)})`;
+      s.beginPath();
+      s.arc(c + Math.cos(a) * r + jx, c + Math.sin(a) * r + jy, dot, 0, Math.PI * 2);
+      s.fill();
+    }
+
+    sprite = document.createElement('canvas');
+    sprite.width = sprite.height = size;
+    const p = sprite.getContext('2d');
+
+    // A soft glowing core, then a blurred copy of the arms for haze, then the sharp stars.
+    const core = p.createRadialGradient(c, c, 0, c, c, c * 0.5);
+    core.addColorStop(0,    'rgba(255,238,215,0.7)');
+    core.addColorStop(0.18, 'rgba(200,165,255,0.3)');
+    core.addColorStop(1,    'rgba(139,92,246,0)');
+    p.fillStyle = core;
+    p.fillRect(0, 0, size, size);
+
+    p.globalAlpha = 1;
+    p.filter = 'blur(9px)';
+    p.drawImage(stars, 0, 0);
+    p.drawImage(stars, 0, 0);
+    p.filter = 'none';
+    p.globalAlpha = 1;
+    p.drawImage(stars, 0, 0);
+  }
+
+  function layout() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    gw = hero.offsetWidth;
+    gh = hero.offsetHeight;
+    g.width  = gw * dpr;
+    g.height = gh * dpr;
+    gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // The bright core sits just above the featured work's top edge, so it peeks out
+    // from behind the painting rather than being hidden by it.
+    const hr = hero.getBoundingClientRect();
+    const ar = art.getBoundingClientRect();
+    cx = ar.left - hr.left + ar.width * 0.62;
+    cy = ar.top  - hr.top  - ar.height * 0.02;
+    radius = Math.min(Math.max(gw * 0.5, 360), 900);
+    buildSprite();
+  }
+
+  function draw() {
+    gctx.clearRect(0, 0, gw, gh);
+    gctx.save();
+    gctx.translate(cx, cy);
+    gctx.rotate(-0.42);        // tilt the plane of the disc
+    gctx.scale(1, 0.46);       // seen at an angle, so the disc reads as an ellipse
+    gctx.rotate(angle);
+    gctx.drawImage(sprite, -radius, -radius, radius * 2, radius * 2);
+    gctx.restore();
+  }
+
+  function fade(now) {
+    const fadeIn   = reduceMotion ? 1 : Math.min(1, (now - born) / 2500);
+    const scrolled = Math.max(0, 1 - window.scrollY / (gh * 0.75));
+    const o = PEAK * fadeIn * scrolled;
+    g.style.opacity = o.toFixed(3);
+    return o;
+  }
+
+  function tick(now) {
+    if (last !== null) angle += SPIN * (now - last) / 1000;
+    last = now;
+    draw();
+    fade(now);
+    frame = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (reduceMotion || frame !== null || !onScreen || document.hidden) return;
+    last = null;
+    frame = requestAnimationFrame(tick);
+  }
+
+  function stop() {
+    if (frame === null) return;
+    cancelAnimationFrame(frame);
+    frame = null;
+  }
+
+  layout();
+  draw();
+  fade(performance.now());
+  start();
+
+  // Still holds its place for reduced motion, it just never turns.
+  window.addEventListener('scroll', () => { if (frame === null) fade(performance.now()); }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      onScreen ? start() : stop();
+    }).observe(hero);
+  }
+
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+
+  let galaxyTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(galaxyTimer);
+    galaxyTimer = setTimeout(() => { layout(); draw(); fade(performance.now()); }, 200);
+  }, { passive: true });
+})();
+
 /* ── GLOW CURSOR ─────────────────────────────────── */
 const cursor = document.getElementById('glow-cursor');
 
