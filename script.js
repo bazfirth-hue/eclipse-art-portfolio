@@ -519,7 +519,7 @@ function renderLightbox(i) {
   const origRadio = buyRadios.find(r => r.value === 'original');
   origRadio.disabled = sold;
   optOriginal.classList.toggle('is-sold', sold);
-  optOriginalNote.textContent  = sold ? 'This original has found its home.' : 'Hand sprayed. The only one in existence.';
+  optOriginalNote.textContent  = sold ? 'This original has found its home.' : 'Built up by hand. The only one in existence.';
   optOriginalPrice.textContent = sold ? 'Sold' : `£${SHOP.originalPrice}`;
   buyKind = sold ? 'print' : 'original';
   buyRadios.forEach(r => { r.checked = r.value === buyKind; });
