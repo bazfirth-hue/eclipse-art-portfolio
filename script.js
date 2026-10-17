@@ -16,7 +16,7 @@ const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
    printLink is ONE Stripe link for every print. The artwork is passed
    to Stripe as client_reference_id, so James can see which one was
    bought on the payment in his Stripe dashboard. */
-const SITE_URL = 'https://bazfirth-hue.github.io/eclipse-art-portfolio/';
+const SITE_URL = 'https://eclipseart.co.uk/';
 
 const SHOP = {
   originalPrice: 200,
