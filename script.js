@@ -5,6 +5,48 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
+/* ── SHOP ────────────────────────────────────────────
+   James's Stripe Payment Links go here. Keys are the artwork image
+   names. Until a link is filled in, that Buy button falls back to the
+   contact form with the piece and price prefilled, so nothing breaks.
+
+   Mark an original sold with  sold: true  and it shows as sold, while
+   the print of it stays on sale.
+
+   printLink is ONE Stripe link for every print. The artwork is passed
+   to Stripe as client_reference_id, so James can see which one was
+   bought on the payment in his Stripe dashboard. */
+const SITE_URL = 'https://bazfirth-hue.github.io/eclipse-art-portfolio/';
+
+const SHOP = {
+  originalPrice: 200,
+  printPrice:    25,
+  printLink:     '',
+  originals: {
+    'the-eclipse':       { link: '', sold: false },
+    'violet-metropolis': { link: '', sold: false },
+    'blood-moon-rising': { link: '', sold: false },
+    'jade-city':         { link: '', sold: false },
+    'cloud-city':        { link: '', sold: false },
+    'neon-skyline':      { link: '', sold: false },
+    'frozen-capital':    { link: '', sold: false },
+    'neon-world':        { link: '', sold: false },
+    'ocean-worlds':      { link: '', sold: false },
+    'stellar-drift':     { link: '', sold: false },
+    'silver-planet':     { link: '', sold: false },
+    'emberfall':         { link: '', sold: false },
+    'comet-run':         { link: '', sold: false },
+    'verdant-giant':     { link: '', sold: false },
+    'sister-worlds':     { link: '', sold: false },
+    'gold-and-violet':   { link: '', sold: false },
+    'magenta-veil':      { link: '', sold: false },
+    'starburst':         { link: '', sold: false },
+  },
+};
+
+const slugOf   = item => item.dataset.full.replace(/^.*\//, '').replace(/\.\w+$/, '');
+const shopFor  = item => SHOP.originals[slugOf(item)] || { link: '', sold: false };
+
 /* ── STARFIELD ───────────────────────────────────── */
 const canvas = document.getElementById('starfield');
 const ctx    = canvas.getContext('2d');
@@ -114,7 +156,7 @@ if (coarsePointer || reduceMotion) {
 const navbar    = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
-const sections  = ['hero', 'gallery', 'about', 'process', 'contact'];
+const sections  = ['hero', 'gallery', 'wall', 'buying', 'about', 'process', 'faq', 'contact'];
 
 function updateNav() {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
@@ -176,6 +218,71 @@ const visibleCount = document.getElementById('visibleCount');
 // The lightbox walks whatever is on screen, so filtering narrows it too.
 let shown = galleryItems.slice();
 
+// Price tags on every card, built from SHOP so they can never disagree with it.
+galleryItems.forEach(item => {
+  const sold = shopFor(item).sold;
+  const tags = document.createElement('span');
+  tags.className = 'card-prices';
+  tags.innerHTML = sold
+    ? `<span class="price-pill sold">Original sold</span><span class="price-pill">Print £${SHOP.printPrice}</span>`
+    : `<span class="price-pill hot">Original £${SHOP.originalPrice}</span><span class="price-pill">Print £${SHOP.printPrice}</span>`;
+  item.appendChild(tags);
+  item.setAttribute('aria-label',
+    `${item.dataset.title}, ${sold ? 'original sold' : `original £${SHOP.originalPrice}`}, print £${SHOP.printPrice}`);
+});
+
+// Product data for search engines, one entry per artwork, from the same source.
+(function addProductData() {
+  const ship = {
+    '@type': 'OfferShippingDetails',
+    shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'GBP' },
+    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' },
+  };
+  const returns = {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'GB',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+    merchantReturnDays: 14,
+    returnMethod: 'https://schema.org/ReturnByMail',
+  };
+  const offer = (name, price, inStock, slug) => ({
+    '@type': 'Offer', name, price: price.toFixed(2), priceCurrency: 'GBP',
+    availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
+    url: `${SITE_URL}#art/${slug}`, itemCondition: 'https://schema.org/NewCondition',
+    shippingDetails: ship, hasMerchantReturnPolicy: returns,
+  });
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'EclipseArt collection',
+    itemListElement: galleryItems.map((item, i) => {
+      const slug = slugOf(item);
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': ['Product', 'VisualArtwork'],
+          name: item.dataset.title,
+          description: item.dataset.caption,
+          image: SITE_URL + item.dataset.full,
+          artMedium: item.dataset.medium,
+          artform: 'Painting',
+          creator: { '@id': `${SITE_URL}#artist` },
+          brand: { '@id': `${SITE_URL}#brand` },
+          offers: [
+            offer('Original', SHOP.originalPrice, !shopFor(item).sold, slug),
+            offer('Art print', SHOP.printPrice, true, slug),
+          ],
+        },
+      };
+    }),
+  };
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(data);
+  document.head.appendChild(s);
+})();
+
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => {
@@ -210,18 +317,48 @@ const lbClose  = document.getElementById('lbClose');
 const lbPrev   = document.getElementById('lbPrev');
 const lbNext   = document.getElementById('lbNext');
 const lbEnquire = document.getElementById('lbEnquire');
+const lbShare  = document.getElementById('lbShare');
+const lbToast  = document.getElementById('lbToast');
+const lbBuy    = document.getElementById('lbBuy');
+const optOriginal      = document.getElementById('optOriginal');
+const optOriginalNote  = document.getElementById('optOriginalNote');
+const optOriginalPrice = document.getElementById('optOriginalPrice');
+const buyRadios = Array.from(lightbox.querySelectorAll('input[name="buyKind"]'));
 
 const categoryLabel = { space: 'Space Scene', cityscape: 'Cityscape', planet: 'Planet System' };
 
 let lbIndex = 0;
 let lastFocus = null;
+let buyKind = 'original';
 
 function preload(src) { if (src) new Image().src = src; }
+
+function currentItem() { return shown[lbIndex]; }
+
+function buyDetails() {
+  const item = currentItem();
+  const slug = slugOf(item);
+  const original = buyKind === 'original';
+  const price = original ? SHOP.originalPrice : SHOP.printPrice;
+  const link  = original
+    ? shopFor(item).link
+    : (SHOP.printLink ? `${SHOP.printLink}?client_reference_id=${slug}` : '');
+  return { item, slug, original, price, link };
+}
+
+function updateBuy() {
+  const { original, price, link } = buyDetails();
+  lbBuy.textContent = original ? `Buy the original, £${price}` : `Buy a print, £${price}`;
+  lbBuy.href = link || '#contact';
+  lbBuy.dataset.live = link ? '1' : '';
+  buyRadios.forEach(r => r.closest('.buy-opt').classList.toggle('selected', r.checked));
+}
 
 function renderLightbox(i) {
   const item = shown[i];
   if (!item) return;
   const d = item.dataset;
+  const sold = shopFor(item).sold;
 
   lbImage.src = d.full;
   lbImage.alt = item.querySelector('img').alt;
@@ -229,11 +366,25 @@ function renderLightbox(i) {
   lbTag.textContent   = categoryLabel[d.category] || '';
   lbDesc.textContent  = d.caption || '';
 
-  // Size and availability only appear once they have been filled in.
-  lbMeta.textContent = [d.medium, d.size, d.status].filter(Boolean).join('\n');
+  // Size only appears once it has been filled in.
+  lbMeta.textContent = [d.medium, d.size].filter(Boolean).join('\n');
   lbCount.textContent = `${i + 1} / ${shown.length}`;
 
+  // A sold original stays visible but cannot be picked, so the print is the offer.
+  const origRadio = buyRadios.find(r => r.value === 'original');
+  origRadio.disabled = sold;
+  optOriginal.classList.toggle('is-sold', sold);
+  optOriginalNote.textContent  = sold ? 'This original has found its home.' : 'Hand sprayed. The only one in existence.';
+  optOriginalPrice.textContent = sold ? 'Sold' : `£${SHOP.originalPrice}`;
+  buyKind = sold ? 'print' : 'original';
+  buyRadios.forEach(r => { r.checked = r.value === buyKind; });
+  updateBuy();
+
+  lbToast.textContent = '';
   lbPrev.hidden = lbNext.hidden = shown.length < 2;
+
+  // A shareable address for every piece, without adding history entries.
+  history.replaceState(null, '', `#art/${slugOf(item)}`);
 
   preload(shown[(i + 1) % shown.length]?.dataset.full);
   preload(shown[(i - 1 + shown.length) % shown.length]?.dataset.full);
@@ -254,6 +405,7 @@ function openLightbox(item) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.classList.remove('lb-open');
+  history.replaceState(null, '', location.pathname + location.search);
   const done = () => { lightbox.hidden = true; };
   reduceMotion ? done() : setTimeout(done, 320);
   if (lastFocus) lastFocus.focus();
@@ -277,14 +429,22 @@ lightbox.addEventListener('click', e => {
   if (e.target === lightbox) closeLightbox();
 });
 
+buyRadios.forEach(r => r.addEventListener('change', () => {
+  buyKind = r.value;
+  updateBuy();
+}));
+
 document.addEventListener('keydown', e => {
   if (lightbox.hidden) return;
-  if (e.key === 'Escape')     { closeLightbox(); }
-  if (e.key === 'ArrowRight') { step(1); }
-  if (e.key === 'ArrowLeft')  { step(-1); }
+  // Arrow keys inside the original/print choice move the choice, not the artwork.
+  const inChoice = e.target.name === 'buyKind';
+  if (e.key === 'Escape')                  { closeLightbox(); }
+  if (e.key === 'ArrowRight' && !inChoice) { step(1); }
+  if (e.key === 'ArrowLeft'  && !inChoice) { step(-1); }
   if (e.key === 'Tab') {
     // Keep tabbing inside the dialog while it is open.
-    const focusables = lightbox.querySelectorAll('button:not([hidden])');
+    const focusables = Array.from(lightbox.querySelectorAll('button, a[href], input'))
+      .filter(el => !el.hidden && !el.disabled && el.offsetParent !== null);
     const first = focusables[0];
     const last  = focusables[focusables.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -302,16 +462,28 @@ lightbox.addEventListener('touchend', e => {
   touchX = null;
 }, { passive: true });
 
-/* ── ENQUIRE ABOUT THIS PIECE ────────────────────── */
-lbEnquire.addEventListener('click', () => {
-  const item = shown[lbIndex];
-  const title = item ? item.dataset.title : '';
+/* ── DEEP LINKS ──────────────────────────────────── */
+// #art/the-eclipse opens that piece, so any work can be linked from social media.
+function openFromHash() {
+  const m = location.hash.match(/^#art\/([\w-]+)$/);
+  if (!m) return;
+  const item = galleryItems.find(it => slugOf(it) === m[1]);
+  if (!item) return;
+  if (!shown.includes(item)) document.querySelector('.filter-btn[data-filter="all"]').click();
+  if (lightbox.hidden) openLightbox(item);
+  else { lbIndex = shown.indexOf(item); renderLightbox(lbIndex); }
+}
 
+window.addEventListener('hashchange', openFromHash);
+openFromHash();
+
+/* ── BUY, ENQUIRE, SHARE ─────────────────────────── */
+function goToForm(message) {
   const type = document.getElementById('ftype');
   const msg  = document.getElementById('fmsg');
 
   type.value = 'purchase';
-  msg.value  = `I'd like to enquire about "${title}".\n\n`;
+  msg.value  = message;
 
   closeLightbox();
   document.getElementById('contact').scrollIntoView({
@@ -321,7 +493,54 @@ lbEnquire.addEventListener('click', () => {
     msg.focus();
     msg.setSelectionRange(msg.value.length, msg.value.length);
   }, reduceMotion ? 0 : 700);
+}
+
+lbBuy.addEventListener('click', e => {
+  if (lbBuy.dataset.live) return; // A real Stripe link, let it go.
+  e.preventDefault();
+  const { item, original, price } = buyDetails();
+  goToForm(`I'd like to buy ${original ? 'the original of' : 'a print of'} "${item.dataset.title}" (£${price}).\n\n`);
 });
+
+lbEnquire.addEventListener('click', () => {
+  const item = currentItem();
+  goToForm(`I have a question about "${item ? item.dataset.title : ''}".\n\n`);
+});
+
+lbShare.addEventListener('click', async () => {
+  const item = currentItem();
+  const url  = `${SITE_URL}#art/${slugOf(item)}`;
+  const text = `${item.dataset.title} by EclipseArt, hand-sprayed space art`;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: item.dataset.title, text, url });
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    lbToast.textContent = 'Link copied, paste it anywhere.';
+  } catch (err) {
+    if (err && err.name === 'AbortError') return; // They closed the share sheet.
+    lbToast.textContent = url;
+  }
+});
+
+/* ── MOBILE BUY BAR ──────────────────────────────── */
+// Shows on phones once the hero is gone, but not over the shop itself or the form.
+const buyBar   = document.getElementById('buyBar');
+const heroEl   = document.getElementById('hero');
+const galleryEl = document.getElementById('gallery');
+const contactEl = document.getElementById('contact');
+
+function updateBuyBar() {
+  const y = window.scrollY, h = window.innerHeight;
+  const pastHero  = y > heroEl.offsetHeight * 0.7;
+  const inGallery = y + h * 0.5 > galleryEl.offsetTop && y + h * 0.5 < galleryEl.offsetTop + galleryEl.offsetHeight;
+  const atForm    = y + h > contactEl.offsetTop + 160;
+  buyBar.classList.toggle('show', pastHero && !inGallery && !atForm);
+}
+
+window.addEventListener('scroll', updateBuyBar, { passive: true });
+updateBuyBar();
 
 /* ── CONTACT FORM ────────────────────────────────── */
 const form        = document.getElementById('contactForm');

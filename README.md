@@ -62,3 +62,12 @@ space before the image arrives, which stops the page jumping about as it loads.
       (for example `Available` or `Sold`) on each work.
 - [ ] **Social links.** There is no Instagram or contact email anywhere on the site yet.
 - [ ] **`og:url` and canonical.** Need the live address once it is hosted.
+
+## Shop (added 17 Oct 2026)
+
+Originals £200, prints £25, UK delivery included. All prices and Stripe links live in the
+`SHOP` block at the top of `script.js`. Paste each Stripe Payment Link into its artwork, and
+the single print link into `printLink`. Until a link is filled in, Buy falls back to the
+contact form with the piece and price prefilled. `sold: true` marks an original sold and keeps
+its print on sale. Card price tags and the Google product data are generated from the same block.
+Every piece has its own shareable link: `#art/<image-name>`, e.g. `#art/the-eclipse`.

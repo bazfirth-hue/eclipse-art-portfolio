@@ -347,7 +347,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 
 .hero-frame img { width: 100%; height: auto; display: block; }
 
-.hero-frame figcaption {
+.hero-frame-cap {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   padding: 44px 24px 20px;
@@ -365,7 +365,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   margin-bottom: 5px;
 }
 
-.hero-frame figcaption strong {
+.hero-frame-cap strong {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
@@ -1397,4 +1397,520 @@ body.lb-open { overflow: hidden; }
   .reveal-hero { opacity: 1; transform: none; }
   .hero-frame  { animation: none; }
   #glow-cursor { display: none; }
+}
+
+/* ════════════════════════════════════════════════
+   V3 SHOP
+   Everything that turns the portfolio into a shop. The artwork
+   stays the brightest thing on the page; prices sit in gold so
+   they read as "offer" without shouting over the paintings.
+   ════════════════════════════════════════════════ */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ── HERO OFFERS ────────────────────────────────── */
+.hero-sub { margin-bottom: 28px; }
+
+.hero-offers {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.hero-offers li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(240, 168, 80, 0.30);
+  background: linear-gradient(135deg, rgba(240, 168, 80, 0.10), rgba(139, 92, 246, 0.06));
+}
+
+.hero-offers strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--gold);
+}
+
+.hero-offers span {
+  font-size: 0.74rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ── HERO FRAME, ECLIPSE RING ───────────────────── */
+@property --ring {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* The float moves to the wrapper so the ring and frame travel together. */
+.hero-frame { display: block; animation: none; }
+.hero-frame:hover { transform: none; }
+
+.hero-art.reveal-hero {
+  animation: heroReveal 0.85s var(--ease) forwards, heroFloat 9s ease-in-out infinite;
+  animation-delay: 0.65s, 1.5s;
+}
+
+.hero-art::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: conic-gradient(from var(--ring),
+    transparent 0deg 250deg,
+    rgba(77, 255, 252, 0.9) 320deg,
+    #ffffff 340deg,
+    rgba(240, 168, 80, 0.9) 352deg,
+    transparent 360deg);
+  animation: ringSpin 7s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(77, 255, 252, 0.6));
+  pointer-events: none;
+}
+
+@keyframes ringSpin { to { --ring: 360deg; } }
+
+.hero-frame-cap { display: block; padding-bottom: 22px; }
+.hero-frame-cap strong { display: block; }
+
+.hero-frame-price {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+
+.hero-frame-view {
+  position: absolute;
+  right: 18px;
+  top: 16px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--accent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--t), transform var(--t);
+}
+
+.hero-frame:hover .hero-frame-view,
+.hero-frame:focus-visible .hero-frame-view { opacity: 1; transform: none; }
+
+@media (hover: none) { .hero-frame-view { opacity: 1; transform: none; } }
+
+/* ── TRUST MARQUEE ──────────────────────────────── */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  padding: 16px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  animation: marquee 38s linear infinite;
+}
+
+.trust-strip:hover .marquee-track { animation-play-state: paused; }
+
+.marquee-track li {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.marquee-track li::after {
+  content: '\2726';
+  margin: 0 30px;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+@keyframes marquee { to { transform: translateX(-100%); } }
+
+/* ── CARD PRICE TAGS ────────────────────────────── */
+.card-prices {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.price-pill {
+  padding: 5px 11px;
+  border-radius: 50px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  background: rgba(4, 4, 15, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.price-pill.hot  { color: #120a00; background: var(--gold); border-color: transparent; }
+.price-pill.sold { color: rgba(255, 255, 255, 0.6); text-decoration: line-through; }
+
+/* ── ON YOUR WALL ───────────────────────────────── */
+#wall {
+  position: relative;
+  z-index: 1;
+  padding: 40px 0 110px;
+}
+
+.wall-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.wall-photo {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 80px rgba(240, 168, 80, 0.10), 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.wall-photo img { width: 100%; height: auto; }
+
+.wall-photo figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 0.66rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wall-lede {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.wall-points {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.wall-points li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.wall-points li::before {
+  content: '\2726';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--gold);
+}
+
+.wall-points strong { color: var(--white); font-weight: 600; }
+
+/* ── HOW BUYING WORKS ───────────────────────────── */
+#buying {
+  position: relative;
+  z-index: 1;
+  padding: 90px 0;
+}
+
+.buy-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+}
+
+/* ── ABOUT CTA ──────────────────────────────────── */
+.about-cta { margin-top: 36px; }
+
+/* ── FAQ ────────────────────────────────────────── */
+#faq {
+  position: relative;
+  z-index: 1;
+  padding: 100px 0 0;
+}
+
+.faq-wrap { max-width: 820px; }
+
+.faq-list { display: grid; gap: 12px; }
+
+.faq-list details {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color var(--t), background var(--t);
+}
+
+.faq-list details[open] {
+  border-color: rgba(77, 255, 252, 0.3);
+  background: rgba(77, 255, 252, 0.04);
+}
+
+.faq-list summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.faq-list summary::-webkit-details-marker { display: none; }
+
+.faq-list summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--accent);
+  transition: transform var(--t);
+}
+
+.faq-list details[open] summary::after { transform: rotate(45deg); }
+
+.faq-list details p {
+  padding: 0 24px 22px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.faq-list a { color: var(--accent); text-decoration: underline; }
+
+/* ── LIGHTBOX BUY PANEL ─────────────────────────── */
+.lb-caption {
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.lb-desc { margin-bottom: 12px; }
+.lb-meta { margin-bottom: 16px; }
+.lb-meta:empty { display: none; }
+
+.lb-buy {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.buy-opt {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: border-color var(--t), background var(--t), box-shadow var(--t);
+}
+
+.buy-opt:hover { border-color: rgba(77, 255, 252, 0.4); }
+
+.buy-opt.selected {
+  border-color: var(--accent);
+  background: rgba(77, 255, 252, 0.07);
+  box-shadow: 0 0 22px rgba(77, 255, 252, 0.14);
+}
+
+.buy-opt input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.buy-opt input::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.2s var(--ease);
+}
+
+.buy-opt input:checked { border-color: var(--accent); }
+.buy-opt input:checked::before { transform: scale(1); }
+.buy-opt input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.buy-opt-body { display: flex; flex-direction: column; gap: 2px; }
+
+.buy-opt-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.buy-opt-note { font-size: 0.74rem; color: var(--muted); line-height: 1.4; }
+
+.buy-opt-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.buy-opt.is-sold { cursor: default; opacity: 0.6; }
+.buy-opt.is-sold input { cursor: default; }
+.buy-opt.is-sold .buy-opt-price { font-size: 1.2rem; color: var(--muted); }
+
+.lb-buy-btn {
+  justify-content: center;
+  padding: 16px 24px;
+  font-size: 0.74rem;
+  box-shadow: 0 0 30px rgba(77, 255, 252, 0.25);
+}
+
+.lb-assure {
+  margin: 10px 0 16px;
+  font-size: 0.74rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.lb-actions {
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.lb-link {
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lb-link:hover { color: var(--white); }
+
+.lb-count { margin-left: auto; }
+
+.lb-toast {
+  font-size: 0.76rem;
+  color: var(--accent);
+  margin-top: 10px;
+  word-break: break-all;
+}
+.lb-toast:empty { display: none; }
+
+/* ── MOBILE BUY BAR ─────────────────────────────── */
+.buy-bar { display: none; }
+
+@media (max-width: 900px) {
+  .buy-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 10px 10px 18px;
+    border-radius: 16px;
+    background: rgba(8, 8, 26, 0.9);
+    border: 1px solid rgba(240, 168, 80, 0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    transform: translateY(140%);
+    transition: transform 0.4s var(--ease);
+  }
+  .buy-bar.show { transform: none; }
+  body.lb-open .buy-bar { transform: translateY(140%); }
+
+  .buy-bar p { display: flex; flex-direction: column; line-height: 1.3; }
+  .buy-bar strong { color: var(--gold); font-size: 0.92rem; }
+  .buy-bar span { font-size: 0.7rem; color: var(--muted); }
+  .buy-bar .btn { flex-shrink: 0; }
+}
+
+/* ── RESPONSIVE, V3 ─────────────────────────────── */
+@media (max-width: 1000px) {
+  .wall-grid { grid-template-columns: 1fr; gap: 40px; }
+  .lb-caption { max-height: none; overflow: visible; }
+  .lb-stage img { max-height: 46vh; }
+}
+
+@media (max-width: 760px) {
+  .buy-steps { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .hero-offers li { flex: 1; min-width: 140px; }
+  .hero-offers strong { font-size: 1.8rem; }
+  .price-pill { font-size: 0.64rem; }
+  .faq-list summary { padding: 18px; font-size: 0.92rem; }
+  .faq-list details p { padding: 0 18px 18px; }
+  #wall { padding-bottom: 80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee { flex-wrap: wrap; justify-content: center; }
+  .marquee-track { animation: none; flex-wrap: wrap; justify-content: center; row-gap: 8px; }
+  .marquee-track[aria-hidden] { display: none; }
+  .hero-art.reveal-hero { animation: none; opacity: 1; transform: none; }
+  .hero-art::before { animation: none; --ring: 200deg; }
+}
+
+/* Phones: arrows sit top-left beside the close button, clear of the title. Swipe also works. */
+@media (max-width: 640px) {
+  .lb-nav, .lb-nav:hover { top: 12px; transform: none; width: 40px; height: 40px; }
+  .lb-prev { left: 12px; }
+  .lb-next { left: 60px; right: auto; }
+  .lightbox { padding-top: 64px; }
 }
