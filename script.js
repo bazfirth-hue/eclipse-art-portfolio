@@ -28,7 +28,6 @@ const SHOP = {
     'blood-moon-rising': { link: '', sold: false },
     'jade-city':         { link: '', sold: false },
     'cloud-city':        { link: '', sold: false },
-    'neon-skyline':      { link: '', sold: false },
     'frozen-capital':    { link: '', sold: false },
     'neon-world':        { link: '', sold: false },
     'ocean-worlds':      { link: '', sold: false },
