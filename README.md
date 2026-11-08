@@ -55,9 +55,7 @@ space before the image arrives, which stops the page jumping about as it loads.
 - [ ] **Contact form is not connected.** Sign up free at web3forms.com, and paste the access key
       over `YOUR_WEB3FORMS_ACCESS_KEY` in `index.html`. Until then the form validates but tells
       the visitor it is not connected, and nothing is delivered.
-- [ ] **Nine works have placeholder titles** that were written to describe the picture, not by
-      James: Cloud City, Frozen Capital, Emberfall, Comet Run, Verdant Giant,
-      Sister Worlds, Magenta Veil, Starburst. His own titles should replace them.
+- [x] **Titles approved.** James confirmed on 8 Nov 2026 that all 17 titles stay as they are.
 - [ ] **Sizes and availability.** Fill `data-size` (for example `60 × 40 cm`) and `data-status`
       (for example `Available` or `Sold`) on each work.
 - [ ] **Social links.** There is no Instagram or contact email anywhere on the site yet.
